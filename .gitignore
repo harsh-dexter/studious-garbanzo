@@ -1,28 +1,21 @@
-# Node modules for any Node.js projects
+# Ignore node_modules for all projects
 **/node_modules/
 
-# Logs
+# Ignore logs and temporary files
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment variables
-**/.env
-**/.env.local
-
-# OS generated files
 .DS_Store
-Thumbs.db
 
-# IDE files (adjust if you use a different editor)
+# Ignore environment files
+.env
+
+# Ignore service account and Firebase config files
+**/serviceAccountKey.json
+**/firebase-config.json
+
+# Ignore IDE folders
 .vscode/
 .idea/
 
-# Build directories (commonly used in many projects)
-**/dist/
+# Ignore build outputs
 **/build/
-
-# Temporary files
-tmp/
-temp/
+**/dist/

@@ -1,63 +1,37 @@
+require('dotenv').config(); // Loads .env variables
 const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const { initializeApp } = require('firebase/app');
-const { getDatabase, ref, update } = require('firebase/database');
-const firebaseConfig = require('../firebase-config.json');
-const admin = require('../firebase-admin'); // Adjust the relative path accordingly
-
-// Now you can use admin to perform any admin operations
-
+const admin = require('./config/firebase-admin');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
+const port = process.env.PORT || 3000;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Apply a simple rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // Limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
+// Sample route to test Firebase Admin
+app.get('/test-firebase', async (req, res, next) => {
+  try {
+    const snapshot = await admin.database().ref('testNode').once('value');
+    res.json(snapshot.val());
+  } catch (error) {
+    next(error);
   }
 });
 
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getDatabase(firebaseApp);
-
-io.use(require('./middleware/rateLimiter'));
-
-io.on('connection', (socket) => {
-  let userId;
-  let typingTimeout;
-
-  socket.on('authenticate', (userData) => {
-    userId = userData.uid;
-    update(ref(db, `users/${userId}`), {
-      online: true,
-      lastSeen: Date.now()
-    });
-  });
-
-  socket.on('typing_start', () => {
-    socket.broadcast.emit('user_typing', userId);
-    clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(() => {
-      socket.emit('typing_stop', userId);
-    }, 5000);
-  });
-
-  socket.on('message', (message) => {
-    io.emit('new_message', message);
-  });
-
-  socket.on('disconnect', () => {
-    if (userId) {
-      update(ref(db, `users/${userId}`), {
-        online: false,
-        lastSeen: Date.now()
-      });
-    }
-  });
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: err.message });
 });
 
-server.listen(4000, () => {
-  console.log('Socket.IO server running on port 4000');
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

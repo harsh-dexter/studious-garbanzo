@@ -1,27 +1,18 @@
 {
-    "expo": {
-      "name": "Anonymous Chat",
-      "slug": "anonymous-chat",
-      "version": "1.0.0",
-      "orientation": "portrait",
-      "icon": "./assets/icon.png",
-      "splash": {
-        "image": "./assets/splash.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#ffffff"
-      },
-      "updates": {
-        "fallbackToCacheTimeout": 0
-      },
-      "assetBundlePatterns": ["**/*"],
-      "android": {
-        "package": "com.anon.chat",
-        "versionCode": 1,
-        "adaptiveIcon": {
-          "foregroundImage": "./assets/adaptive-icon.png",
-          "backgroundColor": "#FFFFFF"
-        }
+  "expo": {
+    "name": "AnonymousChat",
+    "slug": "anonymous-chat",
+    "version": "1.0.0",
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyBpYAXtHQmiXacUl7zsb9D418E5aBcIcrw",
+        "authDomain": "anon-chat-app-d7b33.firebaseapp.com",
+        "databaseURL": "https://anon-chat-app-d7b33-default-rtdb.firebaseio.com",
+        "projectId": "anon-chat-app-d7b33",
+        "storageBucket": "anon-chat-app-d7b33.appspot.com",
+        "messagingSenderId": "186704437505",
+        "appId": "1:186704437505:android:885195aea184482838fb00"
       }
     }
   }
-  
+}
