@@ -1,0 +1,15 @@
+<manifest ...>
+  <application
+    android:allowBackup="false"
+    android:usesCleartextTraffic="false"
+    android:requestLegacyExternalStorage="true">
+    
+    <activity
+      android:name=".MainActivity"
+      android:excludeFromRecents="true"
+      android:screenOrientation="portrait"
+      android:windowSecureFlags="secure">
+      <!-- Other config -->
+    </activity>
+  </application>
+</manifest>

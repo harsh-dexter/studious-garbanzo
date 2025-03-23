@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Expo and React Native files
+.expo/
+.expo-shared/
+
+# Build outputs
+android/app/build/
+ios/build/
+ios/Pods/
+
+# Logs
+*.log
+
+# Environment files
+.env

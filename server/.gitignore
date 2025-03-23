@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# Sensitive credentials (such as service account keys)
+firebase-config.json
+serviceAccountKey.json
+
+# Environment files
+.env
